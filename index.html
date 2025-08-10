@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Assistant</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Assistant</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="assistant-container">
-        <h1>AI Assistant</h1>
-        <p class="subtitle">Manage multiple businesses & personal tasks</p>
+  <div class="container">
+    <h1>AI Assistant</h1>
+    <p class="subtitle">Manage multiple businesses & personal tasks</p>
 
-        <div class="profile-section">
-            <label for="profile">Choose Profile:</label>
-            <select id="profile"></select>
-        </div>
+    <label for="profileSelect" class="label">Choose Profile:</label>
+    <select id="profileSelect"></select>
 
-        <textarea id="command" placeholder="Type your command here..."></textarea>
-        <button id="sendBtn">Send Command</button>
+    <textarea id="commandInput" placeholder="Type your command here..."></textarea>
 
-        <div id="response"></div>
-    </div>
+    <button id="sendBtn">Send Command</button>
 
-    <script src="script.js"></script>
+    <div id="response" class="response-box"></div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
