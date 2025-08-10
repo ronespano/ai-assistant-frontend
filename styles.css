@@ -1,0 +1,57 @@
+:root {
+    --bg-light: #ffffff;
+    --bg-dark: #191919;
+    --text-light: #333333;
+    --text-dark: #f0f0f0;
+    --accent: #4b9ce2;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    font-family: 'Inter', sans-serif;
+    padding: 20px;
+    transition: background 0.3s, color 0.3s;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--bg-dark);
+        color: var(--text-dark);
+    }
+}
+
+.assistant-container {
+    max-width: 600px;
+    margin: auto;
+}
+
+.subtitle {
+    font-size: 0.9em;
+    opacity: 0.7;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+button {
+    background-color: var(--accent);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+#response {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
