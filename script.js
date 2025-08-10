@@ -1,49 +1,47 @@
-// !! IMPORTANT !!
-// Replace this URL with your deployed backend API base URL (Railway/Render/Heroku)
-const BACKEND_URL = "https://web-production-9dded.up.railway.app";
+// ==== CONFIG ====
+// !!! CHANGE THIS TO YOUR RAILWAY BACKEND URL !!!
+const BACKEND_URL = "https://YOUR-BACKEND-URL.up.railway.app";
 
-// Load profiles on page load
-window.onload = async () => {
-    const profileDropdown = document.getElementById("profile");
+// Populate dropdown with profiles from backend
+async function loadProfiles() {
+  try {
+    const res = await fetch(`${BACKEND_URL}/profiles`);
+    const profiles = await res.json();
+    const select = document.getElementById("profileSelect");
 
-    try {
-        // Fetch profile list from backend
-        const res = await fetch(`${BACKEND_URL}/profiles`);
-        const profiles = await res.json();
+    profiles.forEach(profile => {
+      const option = document.createElement("option");
+      option.value = profile;
+      option.textContent = profile;
+      select.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Error loading profiles:", error);
+  }
+}
 
-        profiles.forEach(profile => {
-            const opt = document.createElement("option");
-            opt.value = profile;
-            opt.innerText = profile;
-            profileDropdown.appendChild(opt);
-        });
-    } catch (err) {
-        console.error("Error loading profiles:", err);
-    }
-};
+// Send command to backend
+async function sendCommand() {
+  const profile = document.getElementById("profileSelect").value;
+  const command = document.getElementById("commandInput").value;
+  const responseBox = document.getElementById("response");
 
-// Handle command sending
-document.getElementById("sendBtn").addEventListener("click", async () => {
-    const profile = document.getElementById("profile").value;
-    const command = document.getElementById("command").value;
-    const responseDiv = document.getElementById("response");
+  responseBox.textContent = "Processing...";
 
-    if (!command) {
-        responseDiv.innerText = "Please enter a command.";
-        return;
-    }
+  try {
+    const res = await fetch(`${BACKEND_URL}/command`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ profile, command })
+    });
 
-    try {
-        const res = await fetch(`${BACKEND_URL}/run-command`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ profile, command })
-        });
+    const data = await res.json();
+    responseBox.textContent = data.response || "No response from assistant.";
+  } catch (error) {
+    responseBox.textContent = "Error connecting to backend.";
+    console.error(error);
+  }
+}
 
-        const data = await res.json();
-        responseDiv.innerText = JSON.stringify(data, null, 2);
-    } catch (err) {
-        console.error("Error:", err);
-        responseDiv.innerText = "Error connecting to backend.";
-    }
-});
+document.getElementById("sendBtn").addEventListener("click", sendCommand);
+window.onload = loadProfiles;
